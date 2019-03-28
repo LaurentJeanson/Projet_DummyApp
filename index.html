@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>DummyApp</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+</head>
+
+<body id="body">
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav" id="appAjout">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        <h3 id="TitreProjetMenu" v-on:click="inputNomF"> {{ TitrePro }} </h3>
+                    </a>
+                    <input type="text" name="" v-model="TitrePro" v-if="seenTitrePro">
+                    <input type="button" name="" value="Valider" v-if="seenTitrePro" v-on:click="buttonValider" id="buttonValiderTitre">
+                </li>
+                <div id="InputTitrePro"></div>
+                <li class="dropdown" v-if="seenLi">
+                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Ajouter
+                     <span class="caret"></span></button>
+                     <ul class="dropdown-menu">
+                      <li><a v-on:click="ajoutNav" href="#">Navigateur</a></li>
+                      <li><a v-on:click="ajoutSec" href="#">Section</a></li>
+                      <li><a v-on:click="ajoutPied" href="#">Pied de page</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown" v-if="seenLi">
+                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Couleur
+                     <span class="caret"></span></button>
+                     <ul class="dropdown-menu">
+                      <li v-for="Nav in nbNav">
+                        <a href="#" v-on:click="coulNav($event)" v-if="seenNavCou"> {{ Nav.titre }}
+                            <input v-bind:data-numero="Nav.id" type="color" id="coulNavBout" name="head" value="#e66465">
+                        </a>
+                      </li>
+                      <li v-for="Section in nbSection">
+                        <a href="#"  v-on:click="coulSec" v-if="seenSecCou">{{ Section.titre }}
+                      <input v-bind:data-numero="Section.id" type="color" id="coulSecBout" name="head" value="#e66465">
+                        </a>
+                      </li>
+                      <li v-for="Pied in nbPied">
+                        <a href="#" v-on:click="coulPied" v-if="seenPiedCou" >{{ Pied.titre }}
+                            <input v-bind:data-numero="Pied.id" type="color" id="coulPiedBout" name="head" value="#e66465">
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">Fond
+                            <input v-on:click="coulFond" type="color" id="coulFondBout" name="head" value="#e66465">
+                        </a>
+                      </li>
+                    </ul>
+                </li>
+                <li class="dropdown" v-if="seenLi">
+                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Hauteur (px)
+                     <span class="caret"></span></button>
+                     <ul class="dropdown-menu">
+                      <li id="lesLiNavTaille" v-for="Nav in nbNav">
+                        
+                        <a v-if="seenNavTaille" href="#">{{ Nav.titre }}
+                            <input type="text" id="TailleNav" v-bind:data-numero="Nav.id" v-on:click="TailleNav($event)">
+                        </a>
+                      </li>
+                      <li id="lesLiSecTaille" v-for="Section in nbSection">
+                        <a v-if="seenSecTaille" href="#">{{ Section.titre }}
+                            <input type="text" name="" id="tailleSec" v-bind:data-numero="Section.id" v-on:click="TailleSec($event)">
+                        </a>
+                    </li>
+                      <li id="lesLiFootTaille" v-for="Pied in nbPied">
+                        <a v-if="seenPiedTaille" href="#">{{ Pied.titre }}
+                            <input type="text" name="" id="taillePied" v-bind:data-numero="Pied.id" v-on:click="TaillePied($event)">
+                        </a>
+                    </li>
+                    </ul>
+                </li>
+                <li class="dropdown" v-if="seenLi">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Division
+                    <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                     <li id="lesLiNavDiv" v-for="Nav in nbNav">
+                       
+                       <a v-if="seenNavDiv" href="#">{{ Nav.titre }}
+                           <input type="text" id="DivNav" v-bind:data-numero="Nav.id" v-on:click="DivNav($event)">
+                       </a>
+                     </li>
+                     <li id="lesLiSecDiv" v-for="Section in nbSection">
+                       <a v-if="seenSecDiv" href="#">{{ Section.titre }}
+                           <input type="text" name="" id="DivSec" v-bind:data-numero="Section.id" v-on:click="DivSec($event)">
+                       </a>
+                   </li>
+                     <li id="lesLiFootDiv" v-for="Pied in nbPied">
+                       <a v-if="seenPiedDiv" href="#">{{ Pied.titre }}
+                           <input type="text" name="" id="DivPied" v-bind:data-numero="Pied.id" v-on:click="DivPied($event)">
+                       </a>
+                   </li>
+                   </ul>
+               </li>
+                <li v-if="seenLi">
+                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Effacer
+                     <span class="caret"></span></button>
+                     <ul class="dropdown-menu">
+                      <li id="lesLiNavSup" v-for="Nav in nbNav"><a v-on:click="suppNav($event)" v-if="seenNavSupp" href="#">{{ Nav.titre }}</a></li>
+                      <li id="lesLiSecSup" v-for="section in nbSection"><a v-on:click="suppSec($event)" href="#" v-if="seenSecSupp">{{ section.titre }}</a></li>
+                      <li id="lesLiPiedSup" v-for="Foot in nbPied"><a v-on:click="suppFoot($event)" href="#" v-if="seenPiedSupp">{{ Foot.titre }}</a></li>
+                    </ul>
+                    <h5 id="vosElem">Vos éléments</h5>
+                    <h6 id="aucunElem">Vous n'avez aucun élément pour l'instant</h6>
+                    <ul>
+                            <li id="lesLiNavSup" v-for="Nav in nbNav"><a v-on:click="suppNav($event)" href="#">{{ Nav.titre }}</a></li>
+                            <li id="lesLiSecSup" v-for="section in nbSection"><a v-on:click="suppSec($event)" href="#">{{ section.titre }}</a></li>
+                            <li id="lesLiPiedSup" v-for="Foot in nbPied"><a v-on:click="suppFoot($event)" href="#">{{ Foot.titre }}</a></li>
+                    </ul>
+                    </ul>
+                </li>
+                
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Menu</a>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+    </div>
+    <section id="sectionTuto">
+        <h1 id="titreTuto">Bienvenue sur <span id="DummyTitre">Dummy</span><span id="Apptitre">App</span>!</h1>
+        <h3 id="soustitreTuto">Une application destinée à créer exclusivement des maquettes web.</h3>
+        <h5 id="commentFonc">Comment ca fonctionne?</h5>
+        <div class="container" id="conteneurTuto">
+            <div class="row">
+            <div class="col-sm">
+                1. Ouvrez le menu
+            </div>
+            <div class="col-sm">
+                2. Ajoutez des éléments
+            </div>
+            <div class="col-sm">
+                3. Modifiez-les
+            </div>
+            </div>
+        </div>
+    </section>
+    <!-- /#wrapper -->
+    <!-- Vue.js JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="js/scriptVue.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+     <!-- Script des application Vue.js -->
+
+</body>
+
+</html>
